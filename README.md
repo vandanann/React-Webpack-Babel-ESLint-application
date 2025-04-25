@@ -69,8 +69,7 @@ To use the Babel presets, create babel.config.json
 
 The final step in rendering our React component is extending Webpack so  
 that it adds the minified bundle code to the body tags as scripts when running. 
-Therefore, we should install the html-webpack-plugin package into  
-our devDependencies:
+Therefore, we should install the html-webpack-plugin package into  our devDependencies:
 
 npm install --save-dev html-webpack-plugin
 

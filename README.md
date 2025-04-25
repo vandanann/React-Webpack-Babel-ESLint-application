@@ -1,70 +1,104 @@
-# Getting Started with Create React App
+ Configuring Webpack to work with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  Setting up Webpack
+ To run the React application, we need to install Webpack 5 (at the time of writing, 
+the current stable version of Webpack is version 5) and the Webpack CLI as 
+devDependencies. Webpack is a library that lets us create a bundle out of JavaScript/
+ React code that can be used in a browser. The following steps will help you set  
+up Webpack:
+ 1. Install the required packages from npm using the following command:
 
-## Available Scripts
+ npm install --save-dev webpack webpack-cli
+ 
+ 3. After installation, these packages are included inside the package.json file where 
+we can have them run in our start and build scripts. But first, we need to add 
+some files to the project:
 
-In the project directory, you can run:
+ chapter-1
+  |- node_modules
+  |- package.json
+ + |- src
+ +    |- index.js
 
-### `npm start`
+To do this, configuration files for both Webpack and Babel need to be created in the src 
+directory of the project:
+ + |- babel.config.json
+ + |- webpack.config.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ chapter-1
+  |- node_modules
+  |- package.json
+ + |- babel.config.json
+ + |- webpack.config.js
+  |- dist
+     |- main.js 
+  |- src
+     |- index.js
 
-### `npm test`
+   
+ Now that we've set up a basic development environment with Webpack for  
+a JavaScript application, we can start installing the packages we need in order to run any 
+React application. 
+These packages are react and react-dom, where the former is the generic core package 
+for React and the latter provides an entry point to the browser's DOM and renders React. 
+Install these packages by executing the following command in the command line:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ npm install react react-dom
+ 
+ Installing only the dependencies for React is not sufficient to run it, since, by default, not 
+every browser can read the format (such as ES2015+ or React) that your JavaScript code 
+is written in. Therefore, we need to compile the JavaScript code into a readable format for 
+every browser.
+ For this, we'll use Babel and its related packages to create a toolchain to use React in 
+the browser with Webpack. These packages can be installed as devDependencies by 
+running the following command:
 
-### `npm run build`
+ npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react
+ 
+ Next to the Babel core package, we'll also install babel-loader, which is a helper so 
+that Babel can run with Webpack and two preset packages. These preset packages help 
+determine which plugins will be used to compile our JavaScript code into a readable 
+format for the browser (@babel/preset-env) and to compile React-specific code 
+(@babel/preset-react). With the packages for React and the correct compilers 
+installed, the next step is to make them work with Webpack so that they are used when  
+we run our application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To use the Babel presets, create babel.config.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The final step in rendering our React component is extending Webpack so  
+that it adds the minified bundle code to the body tags as scripts when running. 
+Therefore, we should install the html-webpack-plugin package into  
+our devDependencies:
 
-### `npm run eject`
+npm install --save-dev html-webpack-plugin
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To use this new package to render our files with React, the Webpack configuration 
+in the webpack.config.js file must be extended
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The webpack-dev-server package can be installed with npm:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ npm install --save-dev webpack-dev-server
+ 
+ Also, we need to edit the dev script in the package.json file so that it uses webpack
+dev-server instead of Webpack. This way, you don't have to recompile and reopen the 
+bundle in the browser after every code change
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Webpack is unable to compile CSS files by itself; we need to add the appropriate loaders  
+to make this happen. We can install these by running the following command:
 
-## Learn More
+ npm install --save-dev css-loader style-loader
+ 
+ We need to add these packages as a rule to the Webpack configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ Install ESLint from npm by running the following command:
+ 
+ npm install --save-dev eslint eslint-webpack-plugin eslint-plugin-react
+ 
+ The first package, called eslint, is the core package and helps us identify any potentially 
+problematic patterns in our JavaScript code. eslint-webpack-plugin is a package 
+that is used by Webpack to run ESLint every time we update our code. Finally, eslint
+plugin-react adds specific rules to ESLint for React applications.
+ To configure ESLint, we need to create a file called .eslintrc in the project's root 
+directory and add the code to it

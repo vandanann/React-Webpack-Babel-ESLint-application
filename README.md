@@ -6,11 +6,11 @@ the current stable version of Webpack is version 5) and the Webpack CLI as
 devDependencies. Webpack is a library that lets us create a bundle out of JavaScript/
  React code that can be used in a browser. The following steps will help you set  
 up Webpack:
- 1. Install the required packages from npm using the following command:
+  Install the required packages from npm using the following command:
 
  npm install --save-dev webpack webpack-cli
  
- 3. After installation, these packages are included inside the package.json file where 
+  After installation, these packages are included inside the package.json file where 
 we can have them run in our start and build scripts. But first, we need to add 
 some files to the project:
 
